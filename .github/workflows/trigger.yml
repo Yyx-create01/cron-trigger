@@ -1,0 +1,17 @@
+name: Trigger Amazon Monitor
+
+on:
+  schedule:
+    - cron: "15 1 * * *"
+  workflow_dispatch:
+
+jobs:
+  trigger:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dispatch main repo
+        run: |
+          curl -s -X POST https://api.github.com/repos/Yyx-create01/amazon-monitor/dispatches \
+            -H "Authorization: token ${{ secrets.PAT }}" \
+            -H "Accept: application/vnd.github.v3+json" \
+            -d '{"event_type":"daily-check"}'
